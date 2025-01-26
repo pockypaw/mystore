@@ -1,4 +1,4 @@
-import React from "react"; // Add this import
+import React from "react";
 import {
   AppBar,
   Button,
@@ -16,14 +16,14 @@ import { blueGrey } from "@mui/material/colors";
 
 const Navbar = ({ colorMode, toggleColorMode }) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // For responsiveness
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <AppBar
       position="static"
       sx={{
         backgroundColor: colorMode === "light" ? blueGrey[100] : blueGrey[900],
-        marginBottom:'8px'
+        marginBottom: "8px",
       }}
     >
       <Container maxWidth="lg">
@@ -33,7 +33,6 @@ const Navbar = ({ colorMode, toggleColorMode }) => {
             sx={{
               fontWeight: "bold",
               textTransform: "uppercase",
-              backgroundClip: "text",
               color: colorMode === "light" ? "#000" : "#fff",
               textAlign: isMobile ? "center" : "left",
             }}
@@ -43,22 +42,27 @@ const Navbar = ({ colorMode, toggleColorMode }) => {
             </Link>
           </Typography>
 
-          <div>
-            <Link to="/create">
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Link to="/create" style={{ textDecoration: "none" }}>
               <Button
                 variant="contained"
                 sx={{
                   fontSize: 18,
+                  display: "flex",
+                  alignItems: "center",
                   backgroundColor:
                     colorMode === "light" ? blueGrey[900] : blueGrey[100],
+                  color: colorMode === "light" ? blueGrey[100] : blueGrey[900],
+                  "&:hover": {
+                    backgroundColor:
+                      colorMode === "light"
+                        ? blueGrey[800]
+                        : blueGrey[200],
+                  },
                 }}
               >
-                <FaPlusSquare
-                  sx={{
-                    color:
-                      colorMode === "light" ? blueGrey[100] : blueGrey[900],
-                  }}
-                />
+                <FaPlusSquare/>
+                
               </Button>
             </Link>
             <Button
@@ -70,6 +74,10 @@ const Navbar = ({ colorMode, toggleColorMode }) => {
                 color: colorMode === "light" ? blueGrey[100] : blueGrey[900],
                 backgroundColor:
                   colorMode === "light" ? blueGrey[900] : blueGrey[100],
+                "&:hover": {
+                  backgroundColor:
+                    colorMode === "light" ? blueGrey[800] : blueGrey[200],
+                },
               }}
             >
               {colorMode === "light" ? <IoMoon /> : <LuSun />}
