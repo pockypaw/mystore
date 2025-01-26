@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { blueGrey } from "@mui/material/colors";
 import { useProductStore } from "../store/product.js";
+import { Navigate } from "react-router-dom";
 
 export default function CreatePage() {
   const [newProduct, setNewProduct] = useState({
@@ -27,6 +28,8 @@ export default function CreatePage() {
     message: "",
   });
 
+  const [redirect, setRedirect] = useState(false);
+
   const { createProduct } = useProductStore();
 
   const handleInputChange = (e) => {
@@ -38,7 +41,8 @@ export default function CreatePage() {
     setToast((prev) => ({ ...prev, open: false }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent form from reloading the page
     console.log("Product Details:", newProduct);
 
     const { success, message } = await createProduct(newProduct);
@@ -56,8 +60,13 @@ export default function CreatePage() {
         message: message || "Product created successfully!",
       });
       setNewProduct({ name: "", price: "", image: "" });
+      setRedirect(true); // Trigger redirection after success
     }
   };
+
+  if (redirect) {
+    return <Navigate to="/" replace />; // Redirect to homepage
+  }
 
   return (
     <Container
@@ -87,6 +96,7 @@ export default function CreatePage() {
         component="form"
         noValidate
         autoComplete="off"
+        onSubmit={handleSubmit} // Use onSubmit event for the form
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -105,6 +115,7 @@ export default function CreatePage() {
             value={newProduct.name}
             onChange={handleInputChange}
             aria-describedby="name-helper-text"
+            required
           />
           <FormHelperText id="name-helper-text">
             Enter the name of the product.
@@ -119,6 +130,7 @@ export default function CreatePage() {
             onChange={handleInputChange}
             aria-describedby="price-helper-text"
             type="number"
+            required
           />
           <FormHelperText id="price-helper-text">
             Enter the price of the product.
@@ -132,6 +144,7 @@ export default function CreatePage() {
             value={newProduct.image}
             onChange={handleInputChange}
             aria-describedby="image-helper-text"
+            required
           />
           <FormHelperText id="image-helper-text">
             Enter a URL for the product image.
@@ -147,7 +160,7 @@ export default function CreatePage() {
               backgroundColor: blueGrey[700],
             },
           }}
-          onClick={handleSubmit}
+          type="submit" // Change button type to submit
           fullWidth
         >
           Submit
