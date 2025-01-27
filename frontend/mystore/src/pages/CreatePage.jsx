@@ -43,7 +43,7 @@ export default function CreatePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent form from reloading the page
-    console.log("Product Details:", newProduct);
+   
 
     const { success, message } = await createProduct(newProduct);
 

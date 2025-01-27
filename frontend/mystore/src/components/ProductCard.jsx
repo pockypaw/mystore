@@ -18,7 +18,7 @@ const ButtonPrimary = styled(Button)(({ theme }) => ({
 }));
 
 export default function ProductCard({ product }) {
-    console.log(product)
+
 
   return (
     <Card sx={{ maxWidth: 350, margin: "0 auto" }}>

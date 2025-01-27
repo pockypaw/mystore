@@ -1,18 +1,31 @@
-import { Container, Grid, Typography, CircularProgress, Box } from "@mui/material";
+import {
+  Container,
+  Grid,
+  Typography,
+  CircularProgress,
+  Box,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { useProductStore } from "../store/product";
 
 function HomePages() {
-  const { fetchProducts, products, createProduct, deleteProduct, updateProduct } = useProductStore();
+  const {
+    fetchProducts,
+    products,
+    createProduct,
+    deleteProduct,
+    updateProduct,
+  } = useProductStore();
   const [loading, setLoading] = useState(true);
 
   // Fetch products when the component mounts
   useEffect(() => {
     const fetchProductsData = async () => {
       setLoading(true); // Set loading to true before fetching
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate 3-second delay
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate 3-second delay
       await fetchProducts();
+
       setLoading(false); // Set loading to false after fetching
     };
     fetchProductsData();

@@ -7,7 +7,7 @@ export const useProductStore = create((set) => ({
     if (!newProduct.name || !newProduct.image || !newProduct.price) {
       return { success: false, message: "Please fill in all fields." };
     }
-    const res = await fetch("http://localhost:3000/api/v1/product", {
+    const res = await fetch("/api/v1/product", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,12 +19,24 @@ export const useProductStore = create((set) => ({
     return { success: true, message: "Product created successfully" };
   },
   fetchProducts: async () => {
-    const res = await fetch("http://localhost:3000/api/v1/product");
-    const data = await res.json();
-    set({ products: data.data });
+    try {
+      const res = await fetch("/api/v1/product");
+      const data = await res.json();
+      set({
+        success: true,
+        products: data.data,
+        message: "Data sukses",
+      });
+    } catch (error) {
+      set({
+        success: false,
+        products: [],
+        message: "Data tidak tersedia",
+      });
+    }
   },
   deleteProduct: async (pid) => {
-    const res = await fetch(`http://localhost:3000/api/v1/product/${pid}`, {
+    const res = await fetch(`/api/v1/product/${pid}`, {
       method: "DELETE",
     });
     const data = await res.json();
@@ -37,7 +49,7 @@ export const useProductStore = create((set) => ({
     return { success: true, message: data.message };
   },
   updateProduct: async (pid, updatedProduct) => {
-    const res = await fetch(`http://localhost:3000/api/v1/product/${pid}`, {
+    const res = await fetch(`/api/v1/product/${pid}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
