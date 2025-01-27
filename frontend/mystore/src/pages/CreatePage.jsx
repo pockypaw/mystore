@@ -8,12 +8,13 @@ import {
   Button,
   Box,
   Typography,
-  Snackbar,
-  Alert,
 } from "@mui/material";
 import { blueGrey } from "@mui/material/colors";
 import { useProductStore } from "../store/product.js";
+
 import { Navigate } from "react-router-dom";
+import Toast from "../components/Toast"; // Import global Toast component
+import { useToastStore } from "../store/toast.js";
 
 export default function CreatePage() {
   const [newProduct, setNewProduct] = useState({
@@ -22,40 +23,28 @@ export default function CreatePage() {
     image: "",
   });
 
-  const [toast, setToast] = useState({
-    open: false,
-    severity: "success", // success | error | info | warning
-    message: "",
-  });
-
   const [redirect, setRedirect] = useState(false);
 
   const { createProduct } = useProductStore();
+  const { showToast } = useToastStore(); // Access toast actions
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setNewProduct((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleCloseToast = () => {
-    setToast((prev) => ({ ...prev, open: false }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent form from reloading the page
-   
 
     const { success, message } = await createProduct(newProduct);
 
     if (!success) {
-      setToast({
-        open: true,
+      showToast({
         severity: "error",
         message: message || "Failed to create product.",
       });
     } else {
-      setToast({
-        open: true,
+      showToast({
         severity: "success",
         message: message || "Product created successfully!",
       });
@@ -166,21 +155,6 @@ export default function CreatePage() {
           Submit
         </Button>
       </Box>
-
-      <Snackbar
-        open={toast.open}
-        autoHideDuration={3000}
-        onClose={handleCloseToast}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert
-          onClose={handleCloseToast}
-          severity={toast.severity}
-          sx={{ width: "100%" }}
-        >
-          {toast.message}
-        </Alert>
-      </Snackbar>
     </Container>
   );
 }

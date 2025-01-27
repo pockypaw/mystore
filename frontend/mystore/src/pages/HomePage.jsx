@@ -9,44 +9,54 @@ import React, { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { useProductStore } from "../store/product";
 
+import Toast from "../components/Toast"; // Import Toast component
+import { useToastStore } from "../store/toast";
+
 function HomePages() {
-  const {
-    fetchProducts,
-    products,
-    createProduct,
-    deleteProduct,
-    updateProduct,
-  } = useProductStore();
+  const { fetchProducts, products, deleteProduct, updateProduct } =
+    useProductStore();
+  const { showToast } = useToastStore(); // Access showToast
   const [loading, setLoading] = useState(true);
 
-  // Fetch products when the component mounts
   useEffect(() => {
     const fetchProductsData = async () => {
-      setLoading(true); // Set loading to true before fetching
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate 3-second delay
+      setLoading(true);
       await fetchProducts();
-
-      setLoading(false); // Set loading to false after fetching
+      setLoading(false);
     };
     fetchProductsData();
   }, [fetchProducts]);
 
-  // Handle product deletion
   const handleDeleteProduct = async (pid) => {
     const result = await deleteProduct(pid);
     if (result.success) {
-      await fetchProducts(); // Refresh the products after deleting
+      await fetchProducts();
+      showToast({
+        severity: "success",
+        message: "Product deleted successfully!",
+      });
+    } else {
+      showToast({
+        severity: "error",
+        message: result.message || "Failed to delete product.",
+      });
     }
-    alert(result.message); // Show success or error message
   };
 
-  // Handle product update
   const handleUpdateProduct = async (pid, updatedProduct) => {
     const result = await updateProduct(pid, updatedProduct);
     if (result.success) {
-      await fetchProducts(); // Refresh the products after updating
+      await fetchProducts();
+      showToast({
+        severity: "success",
+        message: "Product updated successfully!",
+      });
+    } else {
+      showToast({
+        severity: "error",
+        message: result.message || "Failed to update product.",
+      });
     }
-    alert(result.message); // Show success or error message
   };
 
   return (
@@ -61,7 +71,7 @@ function HomePages() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            minHeight: "300px", // Adjust the height as needed
+            minHeight: "300px",
           }}
         >
           <CircularProgress />
@@ -72,17 +82,20 @@ function HomePages() {
             products.map((product) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={product._id}>
                 <ProductCard
-                  product={product} // Pass product as prop
+                  product={product}
                   onDelete={handleDeleteProduct}
                   onUpdate={handleUpdateProduct}
                 />
               </Grid>
             ))
           ) : (
-            <Typography variant="body1">Product tidak ada diperiksa</Typography> // Message when no products
+            <Typography variant="body1">No products found. Please add one.</Typography>
           )}
         </Grid>
       )}
+
+      {/* Global Toast Component */}
+      <Toast />
     </Container>
   );
 }
