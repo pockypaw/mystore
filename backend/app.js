@@ -116,7 +116,6 @@ app.get("/hello", (req, res) => {
 // Serve static files in production
 if (process.env.NODE_ENV === "production") {
   const staticPath = path.join(__dirname, "public/dist");
-  console.log(staticPath);
   app.use(express.static(staticPath));
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(staticPath, "index.html"));
