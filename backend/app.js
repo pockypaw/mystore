@@ -74,12 +74,8 @@
 //   console.log(`Server running on port ${PORT}`);
 // });
 
-
-//app.js
 import express from "express";
 import dotenv from "dotenv";
-import helmet from "helmet";
-import cors from "cors";
 import connectDB from "./config/db.js";
 import ProductRoutes from "./routes/product.route.js";
 import path from "path";
@@ -97,23 +93,6 @@ const __dirname = path.dirname(__filename);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// // Configure Helmet (optional but recommended)
-// app.use(
-//   helmet({
-//     contentSecurityPolicy: false, // Adjust as needed
-//     crossOriginEmbedderPolicy: false, // Optional
-//   })
-// );
-
-// // Enable CORS
-// app.use(
-//   cors({
-//     origin: process.env.CORS_ORIGIN || "https://mystore-mocha.vercel.app",
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     credentials: true,
-//   })
-// );
-
 // Connect to the database
 (async () => {
   try {
@@ -128,19 +107,15 @@ app.use(express.urlencoded({ extended: true }));
 // API Routes
 app.use("/api/v1/product", ProductRoutes);
 
-// Test route
-app.get("/hello", (req, res) => {
-  res.send("hello");
-});
-
-// Serve static files in production
+// Serve static files in production (Vite build output)
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "frontend/mystore/dist")));
-  app.get("*", (req, res) =>
-    res.sendFile(
-      path.resolve(__dirname, "frontend", "mystore", "dist", "index.html")
-    )
-  );
+  const staticPath = path.join(__dirname, "frontend/mystore/dist");
+  app.use(express.static(staticPath));
+
+  // Catch-all route for React
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(staticPath, "index.html"));
+  });
 }
 
 // Error Handling Middleware
