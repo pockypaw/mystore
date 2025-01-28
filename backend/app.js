@@ -74,7 +74,6 @@
 //   console.log(`Server running on port ${PORT}`);
 // });
 
-
 import express from "express";
 import dotenv from "dotenv";
 import helmet from "helmet";
@@ -117,6 +116,7 @@ app.get("/hello", (req, res) => {
 // Serve static files in production
 if (process.env.NODE_ENV === "production") {
   const staticPath = path.join(__dirname, "../frontend/mystore/dist");
+  console.log(staticPath);
   app.use(express.static(staticPath));
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(staticPath, "index.html"));
