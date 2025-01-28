@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Grid,
@@ -5,63 +6,80 @@ import {
   CircularProgress,
   Box,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { useProductStore } from "../store/product";
-
-import Toast from "../components/Toast"; // Import Toast component
+import Toast from "../components/Toast";
 import { useToastStore } from "../store/toast";
 
 function HomePages() {
   const { fetchProducts, products, deleteProduct, updateProduct } =
     useProductStore();
-  const { showToast } = useToastStore(); // Access showToast
+  const { showToast } = useToastStore(); // Access the toast store for notifications
   const [loading, setLoading] = useState(true);
 
+  // Fetch products on component mount
   useEffect(() => {
     const fetchProductsData = async () => {
       setLoading(true);
-      await fetchProducts();
-      setLoading(false);
+      try {
+        await fetchProducts();
+      } catch (error) {
+        showToast({
+          severity: "error",
+          message: "Failed to fetch products. Please try again later.",
+        });
+      } finally {
+        setLoading(false);
+      }
     };
     fetchProductsData();
-  }, [fetchProducts]);
+  }, [fetchProducts, showToast]);
 
-  const handleDeleteProduct = async (pid) => {
-    const result = await deleteProduct(pid);
-    if (result.success) {
-      await fetchProducts();
-      showToast({
-        severity: "success",
-        message: "Product deleted successfully!",
-      });
-    } else {
+  // Handle product deletion
+  const handleDeleteProduct = async (productId) => {
+    try {
+      const result = await deleteProduct(productId);
+      if (result.success) {
+        await fetchProducts();
+        showToast({
+          severity: "success",
+          message: "Product deleted successfully!",
+        });
+      } else {
+        throw new Error(result.message || "Failed to delete product.");
+      }
+    } catch (error) {
       showToast({
         severity: "error",
-        message: result.message || "Failed to delete product.",
+        message: error.message,
       });
     }
   };
 
-  const handleUpdateProduct = async (pid, updatedProduct) => {
-    const result = await updateProduct(pid, updatedProduct);
-    if (result.success) {
-      await fetchProducts();
-      showToast({
-        severity: "success",
-        message: "Product updated successfully!",
-      });
-    } else {
+  // Handle product updates
+  const handleUpdateProduct = async (productId, updatedProduct) => {
+    try {
+      const result = await updateProduct(productId, updatedProduct);
+      if (result.success) {
+        await fetchProducts();
+        showToast({
+          severity: "success",
+          message: "Product updated successfully!",
+        });
+      } else {
+        throw new Error(result.message || "Failed to update product.");
+      }
+    } catch (error) {
       showToast({
         severity: "error",
-        message: result.message || "Failed to update product.",
+        message: error.message,
       });
     }
   };
 
   return (
     <Container>
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="body" component="h1" gutterBottom sx={{textAlign:"center"}}>
         My Products
       </Typography>
 
@@ -89,7 +107,18 @@ function HomePages() {
               </Grid>
             ))
           ) : (
-            <Typography variant="body1">No products found. Please add one.</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "200px",
+              }}
+            >
+              <Typography variant="body1" color="text.secondary">
+                No products found. Please add one.
+              </Typography>
+            </Box>
           )}
         </Grid>
       )}

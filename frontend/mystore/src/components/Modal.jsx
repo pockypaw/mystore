@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { styled } from "@mui/material";
+import { Input, styled } from "@mui/material";
 import CreatePage from "../pages/CreatePage";
 
 const style = {
@@ -48,7 +48,27 @@ export default function BasicModal() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-         <CreatePage/>
+          <Input
+            id="name"
+            value={newProduct.name}
+            onChange={handleInputChange}
+            aria-describedby="name-helper-text"
+            required
+          />
+          <Input
+            id="name"
+            value={newProduct.name}
+            onChange={handleInputChange}
+            aria-describedby="name-helper-text"
+            required
+          />
+          <Input
+            id="name"
+            value={newProduct.name}
+            onChange={handleInputChange}
+            aria-describedby="name-helper-text"
+            required
+          />
         </Box>
       </Modal>
     </>
