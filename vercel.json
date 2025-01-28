@@ -17,7 +17,7 @@
       },
       {
         "source": "/(.*)",
-        "destination": "/frontend/mystore/dist/index.html"
+        "destination": "../frontend/mystore/dist/index.html"
       }
     ]
   }
