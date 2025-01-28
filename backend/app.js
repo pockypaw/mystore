@@ -97,22 +97,22 @@ const __dirname = path.dirname(__filename);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Configure Helmet (optional but recommended)
-app.use(
-  helmet({
-    contentSecurityPolicy: false, // Adjust as needed
-    crossOriginEmbedderPolicy: false, // Optional
-  })
-);
+// // Configure Helmet (optional but recommended)
+// app.use(
+//   helmet({
+//     contentSecurityPolicy: false, // Adjust as needed
+//     crossOriginEmbedderPolicy: false, // Optional
+//   })
+// );
 
-// Enable CORS
-app.use(
-  cors({
-    origin: process.env.CORS_ORIGIN || "https://mystore-mocha.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+// // Enable CORS
+// app.use(
+//   cors({
+//     origin: process.env.CORS_ORIGIN || "https://mystore-mocha.vercel.app",
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: true,
+//   })
+// );
 
 // Connect to the database
 (async () => {
