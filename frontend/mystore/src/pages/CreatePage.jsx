@@ -155,6 +155,7 @@ export default function CreatePage() {
           Submit
         </Button>
       </Box>
+      <Toast />
     </Container>
   );
 }
