@@ -108,15 +108,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/v1/product", ProductRoutes);
 
 // Serve static files in production (Vite build output)
-if (process.env.NODE_ENV === "production") {
-  const staticPath = path.join(__dirname, "frontend/mystore/dist");
-  app.use(express.static(staticPath));
 
-  // Catch-all route for React
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(staticPath, "index.html"));
-  });
-}
+const staticPath = path.join(__dirname, "frontend/mystore/dist");
+app.use(express.static(staticPath));
+
+// Catch-all route for React
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(staticPath, "index.html"));
+});s
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
