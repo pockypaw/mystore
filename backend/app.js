@@ -23,11 +23,11 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "http://localhost:5173"],
-        connectSrc: ["'self'", "http://localhost:5173"],
-        imgSrc: ["'self'", "data:", "http://localhost:5173"],
-        styleSrc: ["'self'", "'unsafe-inline'", "http://localhost:5173"],
-        frameSrc: ["'self'", "http://localhost:5173"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "https://mystore-mocha.vercel.app"],
+        connectSrc: ["'self'", "https://mystore-mocha.vercel.app"],
+        imgSrc: ["'self'", "data:", "https://mystore-mocha.vercel.app"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://mystore-mocha.vercel.app"],
+        frameSrc: ["'self'", "https://mystore-mocha.vercel.app"],
       },
     },
     crossOriginEmbedderPolicy: false, // Optional: Disable COEP if needed
@@ -37,7 +37,7 @@ app.use(
 // Enable CORS
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow requests from this origin
+    origin: "https://mystore-mocha.vercel.app", // Allow requests from this origin
     methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
     credentials: true, // Allow cookies or authorization headers
   })
