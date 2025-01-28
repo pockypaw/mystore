@@ -55,6 +55,9 @@ app.use(express.urlencoded({ extended: true }));
 })();
 
 app.use("/api/v1/product", ProductRoutes);
+app.get('/hello',(req,res)=>{
+  res.send('hello');
+})
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/mystore/dist")));
