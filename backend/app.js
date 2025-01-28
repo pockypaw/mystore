@@ -55,16 +55,16 @@ app.use(express.urlencoded({ extended: true }));
 })();
 
 app.use("/api/v1/product", ProductRoutes);
-app.get('/hello',(req,res)=>{
-  res.send('hello');
-})
+app.get("/hello", (req, res) => {
+  res.send("hello");
+});
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/frontend/mystore/dist")));
+  const paths = path.join(__dirname, "/frontend/mystore/dist");
+  console.log(paths);
+  app.use(express.static(paths));
   app.get("*", (req, res) => {
-    res.sendFile(
-      path.resolve(__dirname, "frontend", "mystore", "dist", "index.html")
-    );
+    res.sendFile(path.resolve(paths, "index.html"));
   });
 }
 
