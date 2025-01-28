@@ -9,6 +9,13 @@
         "src": "frontend/mystore/dist/**",
         "use": "@vercel/static"
       }
+    ],
+    "rewrites": [
+      {
+        "source": "/(.*)", 
+        "destination": "/backend/app.js"
+      }
+    
     ]
   }
   
