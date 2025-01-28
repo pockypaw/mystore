@@ -2,19 +2,22 @@
     "version": 2,
     "builds": [
       {
-        "src": "/backend/app.js",
+        "src": "backend/app.js",
         "use": "@vercel/node"
       },
       {
-        "src": "/frontend/mystore/dist/**",
+        "src": "frontend/mystore/dist/**",
         "use": "@vercel/static"
       }
     ],
     "rewrites": [
-     
+      {
+        "source": "/api/(.*)", 
+        "destination": "/backend/app.js"
+      },
       {
         "source": "/(.*)",
-        "destination": "/backend/app.js"
+        "destination": "/frontend/mystore/dist/$1"
       }
     ]
   }
