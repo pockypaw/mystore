@@ -22,7 +22,10 @@ const Navbar = ({ colorMode, toggleColorMode }) => {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: colorMode === "light" ? blueGrey[100] : blueGrey[900],
+        backgroundColor:
+          colorMode === "light"
+            ? theme.palette.primary.light
+            : theme.palette.primary.navbar,
         marginBottom: "8px",
       }}
     >
@@ -55,14 +58,11 @@ const Navbar = ({ colorMode, toggleColorMode }) => {
                   color: colorMode === "light" ? blueGrey[100] : blueGrey[900],
                   "&:hover": {
                     backgroundColor:
-                      colorMode === "light"
-                        ? blueGrey[800]
-                        : blueGrey[200],
+                      colorMode === "light" ? blueGrey[800] : blueGrey[200],
                   },
                 }}
               >
-                <FaPlusSquare/>
-                
+                <FaPlusSquare />
               </Button>
             </Link>
             <Button

@@ -14,12 +14,14 @@ import {
   FormHelperText,
   Input,
   InputLabel,
+  useTheme,
 } from "@mui/material";
+import { blueGrey } from "@mui/material/colors";
 
 // Styled buttons
 const ButtonPrimary = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.primary.contrastText,
+  backgroundColor: "#c38fff",
+  color: "#000",
   "&:hover": {
     backgroundColor: theme.palette.primary.light,
   },
@@ -27,7 +29,7 @@ const ButtonPrimary = styled(Button)(({ theme }) => ({
 
 const ButtonDelete = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.error.main,
-  color: theme.palette.error.contrastText,
+  color: '#000',
   "&:hover": {
     backgroundColor: theme.palette.error.dark,
   },
@@ -46,7 +48,13 @@ const modalStyle = {
   p: 4,
 };
 
-export default function ProductCard({ product = {}, onDelete, onUpdate }) {
+export default function ProductCard({
+  product = {},
+  onDelete,
+  onUpdate,
+  colorMode,
+  toggleColorMode,
+}) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: product.name || "",
@@ -54,6 +62,7 @@ export default function ProductCard({ product = {}, onDelete, onUpdate }) {
     image: product.image || "",
   });
   const [error, setError] = useState("");
+  const theme = useTheme();
 
   useEffect(() => {
     setFormData({
@@ -93,7 +102,13 @@ export default function ProductCard({ product = {}, onDelete, onUpdate }) {
 
   return (
     <>
-      <Card sx={{ maxWidth: 350, margin: "0 auto" }}>
+      <Card
+        sx={{
+          maxWidth: 350,
+          margin: "0 auto",
+          backgroundColor: colorMode === "light" ? blueGrey[100] : "#1d1d1d",
+        }}
+      >
         <CardActionArea>
           <CardMedia
             component="img"
@@ -105,10 +120,19 @@ export default function ProductCard({ product = {}, onDelete, onUpdate }) {
             alt={product.name || "Product Image"}
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              sx={{ color: colorMode === "light" ? "#000" : "#a779df" }}
+            >
               {product.name || "Unnamed Product"}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+
+            <Typography
+              variant="body2"
+              sx={{ color: colorMode === "light" ? "#000" : "#a779df" }}
+            >
               {product.price ? `$${product.price}` : "Price not available"}
             </Typography>
           </CardContent>

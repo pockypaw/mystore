@@ -11,7 +11,7 @@ import { useProductStore } from "../store/product";
 import Toast from "../components/Toast";
 import { useToastStore } from "../store/toast";
 
-function HomePages() {
+function HomePages({colorMode}) {
   const { fetchProducts, products, deleteProduct, updateProduct } =
     useProductStore();
   const { showToast } = useToastStore(); // Access the toast store for notifications
@@ -103,6 +103,7 @@ function HomePages() {
                   product={product}
                   onDelete={handleDeleteProduct}
                   onUpdate={handleUpdateProduct}
+                  colorMode={colorMode}
                 />
               </Grid>
             ))

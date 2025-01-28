@@ -24,7 +24,7 @@ function App() {
       <BrowserRouter>
         <Navbar colorMode={colorMode} toggleColorMode={toggleColorMode} />
         <Routes>
-          <Route path="/" element={<HomePages />} />
+          <Route path="/" element={<HomePages colorMode={colorMode} />} />
           <Route path="/create" element={<CreatePage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>

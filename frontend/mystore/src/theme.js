@@ -5,6 +5,8 @@ import React from "react";
 export const theme = createTheme({
   palette: {
     primary: {
+      navbar:'#1f1f1f',
+      black: "#121212",
       main: blueGrey[900],
       light: blueGrey[100],
       red: red[400],
