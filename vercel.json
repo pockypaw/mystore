@@ -13,7 +13,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/mystore/dist/index.html"
+      "dest": "/backend/app.js"
     }
   ]
 }
