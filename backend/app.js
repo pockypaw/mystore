@@ -23,11 +23,11 @@
 // //     contentSecurityPolicy: {
 // //       directives: {
 // //         defaultSrc: ["'self'"],
-// //         scriptSrc: ["'self'", "'unsafe-inline'", "https://mystore-mocha.vercel.app"],
-// //         connectSrc: ["'self'", "https://mystore-mocha.vercel.app"],
-// //         imgSrc: ["'self'", "data:", "https://mystore-mocha.vercel.app"],
-// //         styleSrc: ["'self'", "'unsafe-inline'", "https://mystore-mocha.vercel.app"],
-// //         frameSrc: ["'self'", "https://mystore-mocha.vercel.app"],
+// //         scriptSrc: ["'self'", "'unsafe-inline'", "https://mystore-t9os.vercel.app/"],
+// //         connectSrc: ["'self'", "https://mystore-t9os.vercel.app/"],
+// //         imgSrc: ["'self'", "data:", "https://mystore-t9os.vercel.app/"],
+// //         styleSrc: ["'self'", "'unsafe-inline'", "https://mystore-t9os.vercel.app/"],
+// //         frameSrc: ["'self'", "https://mystore-t9os.vercel.app/"],
 // //       },
 // //     },
 // //     crossOriginEmbedderPolicy: false, // Optional: Disable COEP if needed
@@ -37,7 +37,7 @@
 // // // Enable CORS
 // // app.use(
 // //   cors({
-// //     origin: "https://mystore-mocha.vercel.app", // Allow requests from this origin
+// //     origin: "https://mystore-t9os.vercel.app/", // Allow requests from this origin
 // //     methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
 // //     credentials: true, // Allow cookies or authorization headers
 // //   })
@@ -103,7 +103,7 @@ app.use(
 );
 app.use(
   cors({
-    origin: ["https://mystore-mocha.vercel.app"],
+    origin: ["https://mystore-t9os.vercel.app/"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
