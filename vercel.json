@@ -11,13 +11,10 @@
       }
     ],
     "rewrites": [
-      {
-        "source": "/api/(.*)",
-        "destination": "/backend/app.js"
-      },
+     
       {
         "source": "/(.*)",
-        "destination": "/frontend/mystore/dist/"
+        "destination": "/backend/app.js"
       }
     ]
   }
