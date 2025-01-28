@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://mystore-mocha.vercel.app",
+        target: "https://",
       },
     },
   },
